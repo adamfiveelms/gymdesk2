@@ -1,18 +1,30 @@
-# AdamDesk (starter)
+# Gymdesk Lite
 
-This is a deployable starter for AdamDesk using:
-- Next.js (web UI)
+A working gym management web app for gym owners, built with:
+- Next.js app router (web UI)
 - Netlify Functions (API)
 - Postgres (Neon recommended)
 
-## Deploy steps (quick)
-1) Create a Neon Postgres DB, copy the connection string.
-2) In Netlify site settings, add env var:
-   - DATABASE_URL = your postgres connection string
-   - NEXT_PUBLIC_API_BASE = /.netlify/functions
-3) Deploy.
-4) Run migration once:
-   - Visit: https://YOUR_SITE.netlify.app/.netlify/functions/migrate
+## Features
+- Dashboard with key metrics and upcoming classes
+- Members workflow (create, status toggle, delete)
+- Classes workflow (create, list, delete)
+- Bookings workflow (create, toggle booked/cancelled, delete)
+- DB migration endpoint to create required tables
 
-## Local env
-Copy `web/.env.local.example` to `web/.env.local`
+## Setup
+1. Create a Postgres database.
+2. Set env vars in Netlify or locally:
+   - `DATABASE_URL`
+   - `NEXT_PUBLIC_API_BASE=/.netlify/functions`
+   - Optional: `ADMIN_API_KEY` (if set, pass `Authorization: Bearer <key>`)
+3. Run migration once:
+   - `/.netlify/functions/migrate`
+4. Start web app:
+   - `npm run dev`
+
+## Main routes
+- `/` dashboard
+- `/members`
+- `/sessions`
+- `/bookings`
