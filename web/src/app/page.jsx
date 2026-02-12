@@ -1,44 +1,12 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { api } from "../lib/api";
 
-export default function Home() {
-  const [health, setHealth] = useState(null);
-  const [members, setMembers] = useState([]);
-  const [sessions, setSessions] = useState([]);
-  const [bookings, setBookings] = useState([]);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function load() {
-      try {
-        setError("");
-        const [h, m, s, b] = await Promise.all([
-          api.health(),
-          api.members.list(),
-          api.sessions.list(),
-          api.bookings.list()
-        ]);
-
-        if (!mounted) return;
-        setHealth(h);
-        setMembers(m);
-        setSessions(s);
-        setBookings(b);
-      } catch (e) {
-        if (!mounted) return;
-        setError(e.message || "Failed loading dashboard data");
-      }
-    }
-
-    load();
-    return () => {
-      mounted = false;
-    };
-  }, []);
+export default async function Home() {
+  const [health, members, sessions, bookings] = await Promise.all([
+    api.health(),
+    api.members.list(),
+    api.sessions.list(),
+    api.bookings.list()
+  ]);
 
   const upcoming = sessions
     .filter((s) => new Date(s.starts_at).getTime() >= Date.now())
@@ -49,10 +17,8 @@ export default function Home() {
       <section className="card">
         <h1 style={{ marginTop: 0 }}>Owner Dashboard</h1>
         <p className="muted">Run memberships, classes, and bookings from one place.</p>
-        <p className="muted">API: {health?.ok ? "Connected" : "Checking..."}</p>
+        <p className="muted">API: {health.ok ? "Connected" : "Unavailable"}</p>
       </section>
-
-      {error && <div className="error">{error}</div>}
 
       <section className="grid grid-3">
         <div className="card"><strong>{members.length}</strong><div className="muted">Total members</div></div>

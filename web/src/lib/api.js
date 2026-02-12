@@ -1,31 +1,7 @@
-function normalizeSiteUrl(url) {
-  if (!url) return "";
-  return url.startsWith("http") ? url : `https://${url}`;
-}
-
-function getApiBase() {
-  const configured = process.env.NEXT_PUBLIC_API_BASE || "/.netlify/functions";
-
-  if (configured.startsWith("http://") || configured.startsWith("https://")) {
-    return configured;
-  }
-
-  if (typeof window !== "undefined") {
-    return configured;
-  }
-
-  const serverBase =
-    normalizeSiteUrl(process.env.URL) ||
-    normalizeSiteUrl(process.env.DEPLOY_PRIME_URL) ||
-    normalizeSiteUrl(process.env.DEPLOY_URL) ||
-    "http://127.0.0.1:8888";
-
-  return new URL(configured, serverBase).toString().replace(/\/$/, "");
-}
+export const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "/.netlify/functions";
 
 async function req(path, init) {
-  const base = getApiBase();
-  const res = await fetch(`${base}${path}`, {
+  const res = await fetch(`${API_BASE}${path}`, {
     ...init,
     headers: {
       "content-type": "application/json",
