@@ -1,0 +1,11 @@
+{
+  "name": "adamdesk",
+  "private": true,
+  "workspaces": [
+    "web"
+  ],
+  "scripts": {
+    "dev": "cd web && npm run dev",
+    "build": "cd web && npm run build"
+  }
+}
