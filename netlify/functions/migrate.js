@@ -1,4 +1,4 @@
-import { getSql, json, handleOptions } from "./_db.js";
+import { getSql, json, handleOptions } from "./db.js";
 import { requireAdmin } from "./_auth.js";
 
 /**

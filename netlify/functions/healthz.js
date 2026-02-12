@@ -1,4 +1,4 @@
-import { getSql, json, handleOptions } from "./_db.js";
+import { getSql, json, handleOptions } from "./db.js";
 
 export async function handler(event) {
   const opt = handleOptions(event);
