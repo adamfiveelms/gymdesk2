@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "cd web && npm run dev",
-    "build": "cd web && npm install && npm run build"
+    "build:web": "npm --prefix web run build"
   },
   "dependencies": {
     "next": "14.2.5",
